@@ -87,6 +87,12 @@ public class MenuView extends LinearLayout {
 
     private List<ObjectAnimator> anims = new ArrayList<>();
 
+    private boolean mSkipSettingMenuIconColors;
+
+    public void setSkipSettingMenuIconColors(boolean skipSettingMenuIconColors) {
+        this.mSkipSettingMenuIconColors = skipSettingMenuIconColors;
+    }
+
     public interface OnVisibleWidthChangedListener {
         void onItemsMenuVisibleWidthChanged(int newVisibleWidth);
     }
@@ -130,10 +136,12 @@ public class MenuView extends LinearLayout {
     }
 
     private void refreshColors() {
-        for (int i = 0; i < getChildCount(); i++) {
-            Util.setIconColor(((ImageView) getChildAt(i)), mActionIconColor);
-            if (mHasOverflow && i == getChildCount() - 1) {
-                Util.setIconColor(((ImageView) getChildAt(i)), mOverflowIconColor);
+        if (!mSkipSettingMenuIconColors) {
+            for (int i = 0; i < getChildCount(); i++) {
+                Util.setIconColor(((ImageView) getChildAt(i)), mActionIconColor);
+                if (mHasOverflow && i == getChildCount() - 1) {
+                    Util.setIconColor(((ImageView) getChildAt(i)), mOverflowIconColor);
+                }
             }
         }
     }
@@ -215,7 +223,9 @@ public class MenuView extends LinearLayout {
                     ImageView action = createActionView();
                     action.setContentDescription(menuItem.getTitle());
                     action.setImageDrawable(menuItem.getIcon());
-                    Util.setIconColor(action, mActionIconColor);
+                    if (!mSkipSettingMenuIconColors) {
+                        Util.setIconColor(action, mActionIconColor);
+                    }
                     addView(action);
                     mActionItems.add(menuItem);
                     actionItemsIds.add(menuItem.getItemId());
@@ -243,7 +253,9 @@ public class MenuView extends LinearLayout {
 
             final ImageView overflowAction = getOverflowActionView();
             overflowAction.setImageResource(R.drawable.ic_more_vert_black_24dp);
-            Util.setIconColor(overflowAction, mOverflowIconColor);
+            if (!mSkipSettingMenuIconColors) {
+                Util.setIconColor(overflowAction, mOverflowIconColor);
+            }
             addView(overflowAction);
 
             overflowAction.setOnClickListener(new OnClickListener() {
@@ -321,7 +333,9 @@ public class MenuView extends LinearLayout {
 
                 ImageView action = (ImageView) getChildAt(actionItemIndex);
                 action.setImageDrawable(showAlwaysActionItem.getIcon());
-                Util.setIconColor(action, mOverflowIconColor);
+                if (!mSkipSettingMenuIconColors) {
+                    Util.setIconColor(action, mOverflowIconColor);
+                }
                 action.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -458,7 +472,9 @@ public class MenuView extends LinearLayout {
                 ImageView action = (ImageView) currentView;
                 final MenuItem actionItem = mActionItems.get(i);
                 action.setImageDrawable(actionItem.getIcon());
-                Util.setIconColor(action, mActionIconColor);
+                if (!mSkipSettingMenuIconColors) {
+                    Util.setIconColor(action, mActionIconColor);
+                }
                 action.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
