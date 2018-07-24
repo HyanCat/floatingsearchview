@@ -2078,4 +2078,10 @@ public class FloatingSearchView extends FrameLayout {
             //do nothing
         }
     }
+
+    //simple method to refresh the visible menu items, can probably be improved!
+    public void refreshMenu() {
+        handleOnVisibleMenuItemsWidthChanged(0);//this must be called before  mMenuView.hideIfRoomItems(...)
+        mMenuView.showIfRoomItems(true);
+    }
 }
