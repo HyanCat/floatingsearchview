@@ -30,6 +30,6 @@ android {
 }
 
 dependencies {
-    compile project(path: ':library-rxbinding')
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    implementation project(path: ':library-rxbinding')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
